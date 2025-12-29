@@ -1,0 +1,42 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ class Pair {
+    int first;  
+    int second;  
+
+    Pair(int first, int second) {
+        this.first = first;
+        this.second = second;
+    }
+}
+class Solution {
+    public int rob(TreeNode root) {
+        Pair p =roob(root);
+        return Math.max(p.first,p.second);
+    }
+    public Pair roob(TreeNode rooot){
+        if(rooot==null){
+            return new Pair(0,0);
+        }
+        Pair l=roob(rooot.left);
+        Pair r=roob(rooot.right);
+
+        int rob=rooot.val+l.second+r.second;
+        int skip=Math.max(l.second,l.first)+Math.max(r.second,r.first);
+
+        return new Pair(rob,skip);
+    }
+}
