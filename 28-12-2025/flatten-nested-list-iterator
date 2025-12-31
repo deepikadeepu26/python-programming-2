@@ -1,0 +1,25 @@
+public class NestedIterator implements Iterator<Integer> {
+    Queue<Integer> q;
+
+    public NestedIterator(List<NestedInteger> nestedList) {
+        q = new LinkedList<>();
+        populate(nestedList, q);
+    }
+
+    private void populate(List<NestedInteger> nestedList, Queue<Integer> q) {
+        for (NestedInteger elem : nestedList) {
+            if (elem.isInteger()) q.offer(elem.getInteger());
+            else populate(elem.getList(), q);
+        }
+    }
+
+    @Override
+    public Integer next() {
+        return q.poll();
+    }
+
+    @Override
+    public boolean hasNext() {
+        return q.peek() != null;
+    }
+}
