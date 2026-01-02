@@ -1,0 +1,16 @@
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        count_num = {}
+
+        for num in nums:
+            if num in count_num:
+                count_num[num] =  count_num[num] + 1
+            else:
+                count_num[num] = 1
+
+        return sorted(count_num, key = lambda x: count_num[x], reverse = True)[:k]
