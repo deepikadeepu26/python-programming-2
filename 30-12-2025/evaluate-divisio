@@ -1,0 +1,53 @@
+class Solution(object):
+    def calcEquation(self, equations, values, queries):
+        """
+        :type equations: List[List[str]]
+        :type values: List[float]
+        :type queries: List[List[str]]
+        :rtype: List[float]
+        """
+        adj_list = dict()
+
+        for i, equation in enumerate(equations):
+            if equation[0] not in adj_list:
+                adj_list[equation[0]] = []
+            if equation[1] not in adj_list:
+                adj_list[equation[1]] = []
+            
+            adj_list[equation[0]].append((equation[1], values[i]))
+            adj_list[equation[1]].append((equation[0], 1 / values[i]))
+        
+        ans = []
+        
+        for query in queries:
+            if query[0] not in adj_list or query[1] not in adj_list:
+                ans.append(-1.0)
+                continue
+                
+            q = deque([(query[0], 1.0)])
+            
+            found = False
+
+            visited = set()
+
+            while q:
+                node, val = q.popleft()
+                
+                if node == query[1]:
+                    found = True
+                    ans.append(val)
+                    break
+
+                if node in visited:
+                    continue
+
+                visited.add(node)
+                
+                for neighbor in adj_list[node]:
+                    if neighbor[0] not in visited:
+                        q.append((neighbor[0], val * neighbor[1]))
+            
+            if not found:
+                ans.append(-1.0)
+        
+        return ans
