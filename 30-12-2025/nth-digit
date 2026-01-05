@@ -1,0 +1,14 @@
+class Solution(object):
+    def findNthDigit(self, n):
+        digit_length=1 #Number of the digits in the number of the current range(1-digit,2-digit...)
+        start=1 #First number in the current range(1,10,100....)
+        count=9 #Count of the numbers in the current range
+        #Finding the range in which the n lies
+        while n>digit_length*count:
+            n-=digit_length*count
+            digit_length+=1
+            start*=10
+            count*=10
+        #Finding the number which contains the nth digit in the seq
+        num=start+ (n-1)//digit_length
+        return int(str(num)[(n - 1) % digit_length])
